@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     for ($i = 0; $i < 9; $i++) {
         $detail = $_POST[$detailsList[$i]];
         $detail = formatdata($detail);
-        if ($detail == "") {
+        if (is_null($detail)) {
             array_push($newBook, "None");
         } else {
             array_push($newBook, $detail);
