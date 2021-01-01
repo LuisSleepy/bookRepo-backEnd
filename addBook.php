@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Failure!";
     }
      */
-
+    mysqli_close($sqlconnect);
 }
 
 function formatdata($input){

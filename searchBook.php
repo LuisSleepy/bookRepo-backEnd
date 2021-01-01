@@ -57,6 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             echo "<br>";
         }
     }
+    mysqli_close($sqlconnect);
 }
 ?>
 </body>
