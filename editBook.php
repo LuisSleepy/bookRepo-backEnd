@@ -11,6 +11,17 @@ DESCRIPTION: PHP file for adding a book to bookRepo
 <body>
 <?php
 
+$bookIndex = $_GET['bookID'];
+$title = $_SESSION['title'][$bookIndex];
+$ISBN = $_SESSION['ISBN'][$bookIndex];
+$author = $_SESSION['author'][$bookIndex];
+$cover = $_SESSION['cover'][$bookIndex];
+$abstract = $_SESSION['abstract'][$bookIndex];
+$series = $_SESSION['series'][$bookIndex];
+$pubHouse = $_SESSION['pubHouse'][$bookIndex];
+$pubDate = $_SESSION['pubDate'][$bookIndex];
+$country = $_SESSION['country'][$bookIndex];
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //Connection to SQL
     $sqlconnect = mysqli_connect('localhost','root','');
@@ -24,46 +35,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Database not connected." . mysqli_error());
     }
 
+    $currDetails = array($title, $ISBN, $author, $cover, $abstract, $series, $pubHouse, $pubDate, $country);
+
     // Details to be supplemented for each book to be added
     $detailsList = array('Title', 'ISBN', 'Author', 'Cover', 'Abstract', 'Series', 'PubHouse', 'PubDate', 'Country',
         'DatePosted');
-    $newBook = array();
+    $editBook = array();
 
-    // Get the input for each detail
+    // Get the new input for each detail of the book
     // If there is no inputted data for a detail that is not required to be supplemented, input "None"
     for ($i = 0; $i < 9; $i++) {
-        $detail = $_POST[$detailsList[$i]];
+        $category = $detailsList[$i];
+        $detail = $_POST[$category];
         $detail = formatdata($detail);
-        if (is_null($detail)) {
-            array_push($newBook, "None");
-        } else {
-            array_push($newBook, $detail);
+
+        // Only edit the detail that has been changed compared to the current value of the detail
+        if ($detail != $currDetails[$i]) {
+            if (is_null($detail)) {
+                $editBook[$category] = "None";
+            } else {
+                $editBook[$category] = $detail;
+            }
         }
     }
 
     // Get the current date while adding the book
     $datePosted = date("Y-m-d");
-    array_push($newBook, $datePosted);
+    $editBook['Date Posted'] = $datePosted;
 
     // Accommodate input with special characters, such as single quotation
-    for ($i = 0; $i < 10; $i++) {
-        $newBook[$i] = mysqli_real_escape_string($sqlconnect, $newBook[$i]);
+    $editSize = sizeof($editBook);
+    $editQuery = "UPDATE books ";
+
+    // Making sure that the value of each category is a valid statement for mySQL
+    // Concatenated too on the edit statement
+    foreach ($editBook as $category => $value) {
+        $value = mysqli_real_escape_string($sqlconnect, $value);
+        $editQuery = $editQuery . "SET " . $category . " = " . "$value" . ", ";
     }
 
-    // mySQL query for adding the book's details on the database
-    $insertQuery = "INSERT INTO books(Title, ISBN, Author, Cover, Abstract, Series, PubHouse, PubDate, Country, DatePosted)
-                    VALUES('$newBook[0]', '$newBook[1]', '$newBook[2]', '$newBook[3]', '$newBook[4]', '$newBook[5]', 
-                    '$newBook[6]', '$newBook[7]', '$newBook[8]', '$newBook[9]')";
-
-    mysqli_query($sqlconnect, $insertQuery);
-    /* Commented out. For testing if the mysqli_query() is working
-    if (mysqli_query($sqlconnect, $insertQuery)) {
-        echo "Successfully added!";
-    } else {
-        echo "Failure!";
-    }
-    */
-
+    $editQuery = $editQuery . "WHERE bookID = $bookIndex";
+    mysqli_query($sqlconnect, $editQuery);
     mysqli_close($sqlconnect);
 }
 
@@ -74,21 +86,21 @@ function formatdata($input){
 
 <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post">
     <label for="Title">Title</label>
-    <input type="text" id="Title" name="Title" size="50" required> <br><br>
+    <input type="text" id="Title" name="Title" size="50" required value="<?php echo $title?>"> <br><br>
     <label for="ISBN">ISBN</label>
-    <input type="text" id="ISBN" name="ISBN" required> <br><br>
+    <input type="text" id="ISBN" name="ISBN" required value="<?php echo $ISBN?>"> <br><br>
     <label for="Author">Author</label>
-    <input type="text" id="Author" name="Author" required> <br><br>
+    <input type="text" id="Author" name="Author" required value="<?php echo $author;?>"> <br><br>
     <label for="Cover">Cover</label>
-    <input type="file" id="Cover" name="Cover" accept="image/*"> <br><br>
+    <input type="file" id="Cover" name="Cover" accept="image/*" value="<?php echo $cover;?>"> <br><br>
     <label for="Abstract">Abstract</label>
-    <input type="text" id="Abstract" name="Abstract" size="50"> <br><br>
+    <input type="text" id="Abstract" name="Abstract" size="50" value="<?php echo $abstract;?>"> <br><br>
     <label for="Series">Series</label>
-    <input type="text" id="Series" name="Series" size="50"> <br><br>
+    <input type="text" id="Series" name="Series" size="50" value="<?php echo $series;?>"> <br><br>
     <label for="PubHouse">Publisher</label>
-    <input type="text" id="PubHouse" name="PubHouse" size="50" required> <br><br>
+    <input type="text" id="PubHouse" name="PubHouse" size="50" required value="<?php echo $pubHouse;?>"> <br><br>
     <label for="PubDate">Publishing Date</label>
-    <input type="date" id="PubDate" name="PubDate" required> <br><br>
+    <input type="date" id="PubDate" name="PubDate" required value="<?php echo $pubDate;?>"> <br><br>
     <!-- Drop down for countries, Retrieved from: https://gist.github.com/danrovito/977bcb97c9c2dfd3398a-->
     <label for="Country">Country</label><span style="color: red !important; display: inline; float: none;">*</span>
     <select id="Country" name="Country" class="form-control">
@@ -337,7 +349,7 @@ function formatdata($input){
         <option value="Zambia">Zambia</option>
         <option value="Zimbabwe">Zimbabwe</option>
     </select> <br><br>
-    <input type="submit" id="Submit" name="Submit" value="Add Book">
+    <input type="submit" id="Submit" name="Submit" value="Save Changes">
 </form>
 </body>
 </html>
