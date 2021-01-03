@@ -65,13 +65,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Accommodate input with special characters, such as single quotation
     $editSize = sizeof($editBook);
-    $editQuery = "UPDATE books ";
+    $editQuery = "UPDATE books SET ";
 
     // Making sure that the value of each category is a valid statement for mySQL
     // Concatenated too on the edit statement
     foreach ($editBook as $category => $value) {
         $value = mysqli_real_escape_string($sqlconnect, $value);
-        $editQuery = $editQuery . "SET " . $category . " = " . "$value" . ", ";
+        $editQuery = $editQuery . $category . " = " . "$value" . ", ";
     }
 
     $editQuery = $editQuery . "WHERE bookID = $bookIndex";
@@ -104,58 +104,58 @@ function formatdata($input){
     <!-- Drop down for countries, Retrieved from: https://gist.github.com/danrovito/977bcb97c9c2dfd3398a-->
     <label for="Country">Country</label><span style="color: red !important; display: inline; float: none;">*</span>
     <select id="Country" name="Country" class="form-control">
-        <option value="Afghanistan">Afghanistan</option>
-        <option value="Åland Islands">Åland Islands</option>
-        <option value="Albania">Albania</option>
-        <option value="Algeria">Algeria</option>
-        <option value="American Samoa">American Samoa</option>
-        <option value="Andorra">Andorra</option>
-        <option value="Angola">Angola</option>
-        <option value="Anguilla">Anguilla</option>
-        <option value="Antarctica">Antarctica</option>
-        <option value="Antigua and Barbuda">Antigua and Barbuda</option>
-        <option value="Argentina">Argentina</option>
-        <option value="Armenia">Armenia</option>
-        <option value="Aruba">Aruba</option>
-        <option value="Australia">Australia</option>
-        <option value="Austria">Austria</option>
-        <option value="Azerbaijan">Azerbaijan</option>
-        <option value="Bahamas">Bahamas</option>
-        <option value="Bahrain">Bahrain</option>
-        <option value="Bangladesh">Bangladesh</option>
-        <option value="Barbados">Barbados</option>
-        <option value="Belarus">Belarus</option>
-        <option value="Belgium">Belgium</option>
-        <option value="Belize">Belize</option>
-        <option value="Benin">Benin</option>
-        <option value="Bermuda">Bermuda</option>
-        <option value="Bhutan">Bhutan</option>
-        <option value="Bolivia">Bolivia</option>
-        <option value="Bosnia and Herzegovina">Bosnia and Herzegovina</option>
-        <option value="Botswana">Botswana</option>
-        <option value="Bouvet Island">Bouvet Island</option>
-        <option value="Brazil">Brazil</option>
-        <option value="British Indian Ocean Territory">British Indian Ocean Territory</option>
-        <option value="Brunei Darussalam">Brunei Darussalam</option>
-        <option value="Bulgaria">Bulgaria</option>
-        <option value="Burkina Faso">Burkina Faso</option>
-        <option value="Burundi">Burundi</option>
-        <option value="Cambodia">Cambodia</option>
-        <option value="Cameroon">Cameroon</option>
-        <option value="Canada">Canada</option>
-        <option value="Cape Verde">Cape Verde</option>
-        <option value="Cayman Islands">Cayman Islands</option>
-        <option value="Central African Republic">Central African Republic</option>
-        <option value="Chad">Chad</option>
-        <option value="Chile">Chile</option>
-        <option value="China">China</option>
-        <option value="Christmas Island">Christmas Island</option>
-        <option value="Cocos (Keeling) Islands">Cocos (Keeling) Islands</option>
-        <option value="Colombia">Colombia</option>
-        <option value="Comoros">Comoros</option>
-        <option value="Congo">Congo</option>
-        <option value="Congo, The Democratic Republic of The">Congo, The Democratic Republic of The</option>
-        <option value="Cook Islands">Cook Islands</option>
+        <option value="Afghanistan" <?php  if($country == 'Afghanistan') {echo 'selected';}?>>Afghanistan</option>
+        <option value="Åland Islands" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Åland Islands</option>
+        <option value="Albania" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Albania</option>
+        <option value="Algeria" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Algeria</option>
+        <option value="American Samoa" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>American Samoa</option>
+        <option value="Andorra" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Andorra</option>
+        <option value="Angola" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Angola</option>
+        <option value="Anguilla" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Anguilla</option>
+        <option value="Antarctica" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Antarctica</option>
+        <option value="Antigua and Barbuda" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Antigua and Barbuda</option>
+        <option value="Argentina" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Argentina</option>
+        <option value="Armenia" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Armenia</option>
+        <option value="Aruba" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Aruba</option>
+        <option value="Australia" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Australia</option>
+        <option value="Austria" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Austria</option>
+        <option value="Azerbaijan" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Azerbaijan</option>
+        <option value="Bahamas" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Bahamas</option>
+        <option value="Bahrain" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Bahrain</option>
+        <option value="Bangladesh" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Bangladesh</option>
+        <option value="Barbados" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Barbados</option>
+        <option value="Belarus" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Belarus</option>
+        <option value="Belgium" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Belgium</option>
+        <option value="Belize" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Belize</option>
+        <option value="Benin" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Benin</option>
+        <option value="Bermuda" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Bermuda</option>
+        <option value="Bhutan" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Bhutan</option>
+        <option value="Bolivia" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Bolivia</option>
+        <option value="Bosnia and Herzegovina" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Bosnia and Herzegovina</option>
+        <option value="Botswana" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Botswana</option>
+        <option value="Bouvet Island" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Bouvet Island</option>
+        <option value="Brazil" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Brazil</option>
+        <option value="British Indian Ocean Territory" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>British Indian Ocean Territory</option>
+        <option value="Brunei Darussalam" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Brunei Darussalam</option>
+        <option value="Bulgaria" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Bulgaria</option>
+        <option value="Burkina Faso" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Burkina Faso</option>
+        <option value="Burundi" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Burundi</option>
+        <option value="Cambodia" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Cambodia</option>
+        <option value="Cameroon" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Cameroon</option>
+        <option value="Canada" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Canada</option>
+        <option value="Cape Verde" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Cape Verde</option>
+        <option value="Cayman Islands" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Cayman Islands</option>
+        <option value="Central African Republic" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Central African Republic</option>
+        <option value="Chad" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Chad</option>
+        <option value="Chile" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Chile</option>
+        <option value="China" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>China</option>
+        <option value="Christmas Island" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Christmas Island</option>
+        <option value="Cocos (Keeling) Islands" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Cocos (Keeling) Islands</option>
+        <option value="Colombia" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Colombia</option>
+        <option value="Comoros" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Comoros</option>
+        <option value="Congo" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Congo</option>
+        <option value="Congo, The Democratic Republic of The" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Congo, The Democratic Republic of The</option>
+        <option value="Cook Islands" <?php  if($country == 'Åland Islands') {echo 'selected';}?>>Cook Islands</option>
         <option value="Costa Rica">Costa Rica</option>
         <option value="Cote D'ivoire">Cote D'ivoire</option>
         <option value="Croatia">Croatia</option>
