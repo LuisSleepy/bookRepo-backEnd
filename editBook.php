@@ -71,7 +71,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Concatenated too on the edit statement
     foreach ($editBook as $category => $value) {
         $value = mysqli_real_escape_string($sqlconnect, $value);
-        $editQuery = $editQuery . $category . " = " . "$value" . ", ";
+        if ($category != array_key_last($editBook)) {
+            $editQuery = $editQuery . $category . " = " . "$value, ";
+        } else {
+            $editQuery = $editQuery . $category . " = " . "$value ";
+        }
     }
 
     $editQuery = $editQuery . "WHERE bookID = $bookIndex";
